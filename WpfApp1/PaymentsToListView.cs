@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WpfApp1
 {
     internal class PaymentsToListView
     {
         private static char[] trimChars = { ' ', '\n' };
-        public string Number {
-            get { return GetOrDefault("Номер", "n/a"); } 
+        public string Number
+        {
+            get { return GetOrDefault("Номер", "n/a"); }
             set { _parameters["Номер"] = value; }
         }
         public string Date
@@ -21,7 +18,8 @@ namespace WpfApp1
         }
         public string Sum
         {
-            get {
+            get
+            {
                 string value = GetOrDefault("Сумма", "");
                 if (value.Length == 0)
                     return "n/a";
@@ -40,8 +38,10 @@ namespace WpfApp1
             set { _parameters["НазначениеПлатежа"] = value; }
         }
 
-        public string NativeCode {
-            get { 
+        public string NativeCode
+        {
+            get
+            {
                 return _stringBuilder.ToString();
             }
             set { }
@@ -60,11 +60,12 @@ namespace WpfApp1
             return value ?? "n/a";
         }
 
-        public void AddString(string line1c) {
+        public void AddString(string line1c)
+        {
             string[] line_split = line1c.Trim(trimChars).Split('=');
             string key = line_split[0];
             string value;
-            if(line_split.Length > 1)
+            if (line_split.Length > 1)
                 value = line_split[1];
             else
                 value = null;
@@ -76,7 +77,7 @@ namespace WpfApp1
                 _stringBuilder.Append("\n");
                 _stringBuilder.Append(line1c.Trim(trimChars));
             }
-            
+
         }
     }
 }

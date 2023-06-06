@@ -5,23 +5,20 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
-using System.Windows.Documents;
-using System.Collections.Generic;
+
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private string _fileName = null;
         private Read1c _ptrRead1c = null;
-        private enum argState {
+        private enum argState
+        {
             None,
             Ok,
             Fail,
-            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -53,12 +50,14 @@ namespace WpfApp1
                 }
                 else this.ApplyReader();
             }
-            else {
+            else
+            {
                 Debug.WriteLine("no result");
             }
         }
 
-        private void OnClickSaveAs(object sender, RoutedEventArgs e) {
+        private void OnClickSaveAs(object sender, RoutedEventArgs e)
+        {
             Debug.WriteLine("SaveAs button is clicked");
 
             Read1c read1C = this._ptrRead1c;
@@ -67,7 +66,7 @@ namespace WpfApp1
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
             // Default file name
             dlg.FileName = read1C.PayerName.Replace("\"", string.Empty) + " " +
-                DateTime.Now.ToString().Replace(":","-") + 
+                DateTime.Now.ToString().Replace(":", "-") +
                 ".txt";
             dlg.DefaultExt = ".txt";
             dlg.Filter = "Текстовый файл|*.txt";
@@ -88,7 +87,7 @@ namespace WpfApp1
         {
             bool isNewDate = CheckBoxDate.IsChecked ?? false;
             bool isNewNumbers = CheckBoxDate.IsChecked ?? false;
-            bool isNewRequisites  = CheckBoxRequisites.IsChecked ?? false;
+            bool isNewRequisites = CheckBoxRequisites.IsChecked ?? false;
             string newDate = String.Empty;
             int newNumerationNumber = 0;
             string newAccount = String.Empty;
@@ -101,7 +100,8 @@ namespace WpfApp1
             if (isNewDate)
             {
                 DateTime? selectedDate = NewDatePicker.SelectedDate;
-                if (selectedDate == null) {
+                if (selectedDate == null)
+                {
                     MessageBox.Show("Выбрано изменение даты, но значение даты не установлено!", "Выберите дату",
                         MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
@@ -137,7 +137,8 @@ namespace WpfApp1
                 }
 
             }
-            if (isNewRequisites) {
+            if (isNewRequisites)
+            {
                 newAccount = PayerAccount.Text;
                 newBankName = PayerBankName.Text;
                 newBankCity = PayerBankCity.Text;
@@ -212,7 +213,8 @@ namespace WpfApp1
             this.Cursor = null;
         }
 
-        private argState get_first_arg() {
+        private argState get_first_arg()
+        {
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
@@ -249,7 +251,8 @@ namespace WpfApp1
                     return argState.Ok;
                 }
             }
-            else {
+            else
+            {
                 return argState.None;
             }
         }
@@ -259,18 +262,20 @@ namespace WpfApp1
             Debug.WriteLine($"Reading file {fileName}");
             Read1c read1c = Read1c.FromFile(fileName);
 
-            if (read1c == null) {
+            if (read1c == null)
+            {
                 Debug.WriteLine("Ошибка чтения файла: " + Read1c.State.ToString());
                 return false;
             }
 
             // save the Reader1c instance for updating main window and creating output file
             this._ptrRead1c = read1c;
-            
+
             return true;
         }
 
-        private void ApplyReader() {
+        private void ApplyReader()
+        {
             Read1c read1c = this._ptrRead1c;
             if (read1c == null) return;
 
@@ -294,7 +299,7 @@ namespace WpfApp1
             {
                 NewNumerationFrom.Text = read1c.PaymentsList[0].Number;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.Write(ex.ToString());
                 NewNumerationFrom.Text = "1";

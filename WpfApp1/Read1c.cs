@@ -1,13 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Windows.Media;
-using System.Runtime.CompilerServices;
-using System.Windows.Shapes;
+
 
 namespace WpfApp1
 {
@@ -23,7 +19,7 @@ namespace WpfApp1
         public static State_enum State;
 
         private RubleKop _sum;
-        private int _count_payments = 0; 
+        private int _count_payments = 0;
         private List<PaymentsToListView> _payments = new List<PaymentsToListView>();
         private string _payerName;
         private string _payerAccount;
@@ -35,13 +31,15 @@ namespace WpfApp1
         private string[] _inputFileLines;
 
 
-        public string TotalSum{
-            get { 
+        public string TotalSum
+        {
+            get
+            {
                 if (_sum != null)
-                return _sum.ToString();
-            else
-                return "n/a";
-            }           
+                    return _sum.ToString();
+                else
+                    return "n/a";
+            }
         }
 
         public string TotalCount { get { return _count_payments.ToString(); } }
@@ -58,13 +56,15 @@ namespace WpfApp1
 
         public string PayerBankBik { get { return _payerBankBik ?? "n/a"; } }
 
-        public List<PaymentsToListView> PaymentsList {
+        public List<PaymentsToListView> PaymentsList
+        {
             get { return _payments; }
         }
 
         public Read1c() { }
 
-        public static Read1c FromFile(string filename) {
+        public static Read1c FromFile(string filename)
+        {
             string[] file_lines;
             try
             {
@@ -76,11 +76,13 @@ namespace WpfApp1
                 State = State_enum.IO_EXCEPTION;
                 return null;
             }
-            if (file_lines.Length == 0) {
+            if (file_lines.Length == 0)
+            {
                 State = State_enum.EMPTY_FILE;
                 return null;
             }
-            if (!CheckFormat(file_lines)) {
+            if (!CheckFormat(file_lines))
+            {
                 State = State_enum.WRONG_FORMAT;
                 return null;
             }
@@ -92,16 +94,19 @@ namespace WpfApp1
             char[] trimChars = { ' ', '\n' };
             bool isName = false, isAccount = false, isBankName = false, isBankCity = false, isBankKS = false, isBankBik = false;
             // read Payer info and count sum of all payments
-            foreach (string line in file_lines) {
+            foreach (string line in file_lines)
+            {
 
                 // Counts sums of all the payments
-                if (line.StartsWith("Сумма=")) {
+                if (line.StartsWith("Сумма="))
+                {
                     read1c._sum += RubleKop.FromString(line.Split('=')[1].Trim(trimChars));
                     read1c._count_payments++;
                 }
 
                 // Gets first entries for Payer
-                if (!isName && line.StartsWith("Плательщик1=")) {
+                if (!isName && line.StartsWith("Плательщик1="))
+                {
                     read1c._payerName = line.Split('=')[1].Trim(trimChars);
                     isName = true;
                     continue;
@@ -155,12 +160,13 @@ namespace WpfApp1
                     isInPayment = false;
                     continue;
                 }
-                if (isInPayment) {
+                if (isInPayment)
+                {
                     payment.AddString(line);
                 }
 
             }
-                return read1c;
+            return read1c;
         }
 
         private static bool CheckFormat(string[] lines)
@@ -200,15 +206,18 @@ namespace WpfApp1
                                 string newBankName,
                                 string newBankCity,
                                 string newBankKS,
-                                string newBankBik) {
+                                string newBankBik)
+        {
             string[] result = new string[_inputFileLines.Length];
 
             for (int i = 0, pNumber = newNumerationNumber; i < result.Length; ++i)
             {
-                string line  = _inputFileLines[i];
+                string line = _inputFileLines[i];
 
-                if (isNewDate) {
-                    if (line.StartsWith("ДатаНачала=")) {
+                if (isNewDate)
+                {
+                    if (line.StartsWith("ДатаНачала="))
+                    {
                         result[i] = "ДатаНачала=" + newDate;
                         continue;
                     }
@@ -224,7 +233,8 @@ namespace WpfApp1
                     }
                 }
 
-                if (isNewNumbers) {
+                if (isNewNumbers)
+                {
                     if (line.StartsWith("Номер="))
                     {
                         result[i] = "Номер=" + pNumber.ToString();
@@ -233,7 +243,8 @@ namespace WpfApp1
                     }
                 }
 
-                if (isNewRequisites) {
+                if (isNewRequisites)
+                {
 
                     // Рассчетный счет
                     if (line.StartsWith("РасчСчет="))
@@ -283,7 +294,6 @@ namespace WpfApp1
 
                 result[i] = String.Copy(line);
             }
-
 
             return result;
         }

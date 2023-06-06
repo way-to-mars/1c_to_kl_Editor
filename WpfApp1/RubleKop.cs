@@ -15,21 +15,25 @@ namespace WpfApp1
         private static char _output_delimiter = '-';
         private static char _group_delimiter = ' ';
 
-        public int Rubles {
-            get {
+        public int Rubles
+        {
+            get
+            {
                 return (int)(this._value / 100);
             }
         }
 
         public int Kopeyki
         {
-            get {
+            get
+            {
                 return (int)(this._value % 100);
             }
         }
 
 
-        public RubleKop(int rubles, int kopeyki) {
+        public RubleKop(int rubles, int kopeyki)
+        {
             this._value = (long)rubles * 100 + (long)kopeyki;
         }
 
@@ -51,7 +55,8 @@ namespace WpfApp1
             return this.Rubles.ToString("#,#", culture) + _output_delimiter.ToString() + this.Kopeyki.ToString("00");
         }
 
-        public static RubleKop FromString(string str) {
+        public static RubleKop FromString(string str)
+        {
             string[] str_list = str.Split(_input_delimiter);
             int rub = 0;
             int kop = 0;
