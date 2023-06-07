@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Linq;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace WpfApp1
 {
@@ -195,7 +196,7 @@ namespace WpfApp1
             var output_list = this._ptrRead1c.ApplyChanges(isNewDate, isNewNumbers, isNewRequisites, newDate,
                 newNumerationNumber, newAccount, newBankName, newBankCity, newBankKS, newBankBik);
 
-            File.WriteAllLines(filename, output_list);
+            File.WriteAllLines(filename, output_list, Encoding.GetEncoding("windows-1251"));
             return;
         }
 
