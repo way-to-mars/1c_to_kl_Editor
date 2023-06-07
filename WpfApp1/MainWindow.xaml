@@ -176,7 +176,8 @@
                         Name="PayerAccount"
                         Margin="10 5 10 5"
                         Grid.Row="1"
-                        Grid.Column="1"></TextBox>
+                        Grid.Column="1"
+                        LostFocus="OnLostFocusTextBoxCleanDigits"></TextBox>
                     <TextBox
                         Name="PayerBankName"
                         Margin="10 5 10 5"
@@ -191,12 +192,14 @@
                         Name="PayerBankKS"
                         Margin="10 5 10 5"
                         Grid.Row="4"
-                        Grid.Column="1"></TextBox>
+                        Grid.Column="1"
+                        LostFocus="OnLostFocusTextBoxCleanDigits"></TextBox>
                     <TextBox
                         Name="PayerBankBik"
                         Margin="10 5 10 5"
                         Grid.Row="5"
-                        Grid.Column="1"></TextBox>
+                        Grid.Column="1"
+                        LostFocus="OnLostFocusTextBoxCleanDigits"></TextBox>
                     <CheckBox
                         Name="CheckBoxRequisites"
                         Margin="10 11 10 0"
@@ -220,7 +223,10 @@
                 <TextBlock Margin="5 5 10 5">
                    Перенумеровать, начиная с:
                 </TextBlock>
-                <TextBox Margin="0 5 0 5" Name="NewNumerationFrom" MinWidth="60"></TextBox>
+                <TextBox Margin="0 5 0 5"
+                         Name="NewNumerationFrom"
+                         MinWidth="60"
+                         LostFocus="OnLostFocusTextBoxCleanDigits"></TextBox>
             </StackPanel>
             <Button
                 Name="OpenFileButton"

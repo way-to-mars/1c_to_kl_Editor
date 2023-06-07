@@ -5,7 +5,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
-
+using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace WpfApp1
 {
@@ -82,6 +83,16 @@ namespace WpfApp1
                 SaveToFile(filename);
             }
         }
+
+        // removes all characters except digits = {0, 1, 2 - 9}
+        private void OnLostFocusTextBoxCleanDigits(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = e.Source as TextBox;
+            string user_text = tb.Text;
+            if (user_text == null) return;
+            tb.Text = Regex.Replace(user_text, @"[^0-9]", "");
+        }
+
 
         private void SaveToFile(string filename)
         {
@@ -306,5 +317,6 @@ namespace WpfApp1
             }
             this.Title = "1c_to_kl Редактор [ " + this._fileName + " ]";
         }
+
     }
 }
