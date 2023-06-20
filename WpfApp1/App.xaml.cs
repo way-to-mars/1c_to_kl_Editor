@@ -24,7 +24,7 @@ namespace WpfApp1
 
             try
             {
-                // Quick early check for input file_name
+                // Early check for input file_name
                 // if input args and corresponding file exist but the file doesn't starts with "1CClientBankExchange"
                 // then open it in notepad and close the App
                 string[] args = Environment.GetCommandLineArgs();
@@ -34,6 +34,13 @@ namespace WpfApp1
                     string first_line = File.ReadLines(args[1], Encoding.GetEncoding("windows-1251")).First();
                     if (first_line != null && !first_line.StartsWith("1CClientBankExchange"))
                     {
+                        Process.Start("notepad.exe", args[1]);
+                        this.Shutdown();
+                    }
+                    // if File contains 1CClientBankExchange make sure it has exactly format needed
+                    if (!Read1c.CheckFormat(
+                            File.ReadAllLines(args[1], Encoding.GetEncoding("windows-1251"))
+                        )) {
                         Process.Start("notepad.exe", args[1]);
                         this.Shutdown();
                     }

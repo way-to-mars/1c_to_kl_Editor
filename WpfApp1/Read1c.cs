@@ -169,7 +169,7 @@ namespace WpfApp1
             return read1c;
         }
 
-        private static bool CheckFormat(string[] lines)
+        public static bool CheckFormat(string[] lines)
         {
             String internalTag = "1CClientBankExchange";
             bool isInternalFlag = false;
