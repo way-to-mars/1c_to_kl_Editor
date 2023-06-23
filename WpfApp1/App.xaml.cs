@@ -37,8 +37,8 @@ namespace WpfApp1
                         Process.Start("notepad.exe", args[1]);
                         this.Shutdown();
                     }
-                    // if File contains 1CClientBankExchange make sure it has exactly format needed
-                    if (!Read1c.CheckFormat(
+                    // if File starts with "1CClientBankExchange" make sure it has the exactly format needed
+                    else if (!Read1c.CheckFormat(
                             File.ReadAllLines(args[1], Encoding.GetEncoding("windows-1251"))
                         )) {
                         Process.Start("notepad.exe", args[1]);
