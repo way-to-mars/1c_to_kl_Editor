@@ -98,7 +98,7 @@ namespace WpfApp1
         private void SaveToFile(string filename)
         {
             bool isNewDate = CheckBoxDate.IsChecked ?? false;
-            bool isNewNumbers = CheckBoxDate.IsChecked ?? false;
+            bool isNewNumbers = CheckBoxNumbers.IsChecked ?? false;
             bool isNewRequisites = CheckBoxRequisites.IsChecked ?? false;
             string newDate = String.Empty;
             int newNumerationNumber = 0;
