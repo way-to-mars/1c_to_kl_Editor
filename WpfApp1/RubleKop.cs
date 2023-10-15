@@ -57,18 +57,24 @@ namespace WpfApp1
 
         public static RubleKop FromString(string str)
         {
-            string[] str_list = str.Split(_input_delimiter);
-            int rub = 0;
-            int kop = 0;
+            string[] str_list;
+            int rub;
+            int kop;
             try
             {
+                str_list = str.Split(_input_delimiter);
                 rub = Int32.Parse(str_list[0]);
                 if (str_list.Length > 1)
-                {
-                    kop = Int32.Parse(str_list[1]);
-                }
+                    switch (str_list[1].Length)
+                    {
+                        case 0: kop = 0; break;                                                 // "1230." = 1230-00
+                        case 1: kop = 10 * Int32.Parse(str_list[1]); break;                     // "1230.5" = 1230-50
+                        case 2: kop = Int32.Parse(str_list[1]); break;                          // "1230.57" = 1230-57
+                        default: kop = Int32.Parse(String.Concat(str_list[1].Take(2))); break;  // "1230.57489" = 1230-57 - truncate
+                    }
+                else kop = 0;
             }
-            catch (FormatException) { return new RubleKop(0, 0); }
+            catch (Exception) { return RubleKop.ZERO; }
             return new RubleKop(rub, kop);
         }
 
